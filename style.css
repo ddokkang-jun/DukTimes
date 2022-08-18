@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+}
+
+button {
+  background: none;
+  outline: none;
+  border: none;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+
+.title img {
+  width: 430px;
+}
+
+.menus {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-top: 1px solid #ebebeb;
+  border-bottom: 4px double black;
+  padding: 1em;
+}
+
+.menus button:hover {
+  background-color: beige;
+}
