@@ -1,6 +1,19 @@
 'use strict'
 
+let openNavBtn = document.querySelector('#side-nav-openBtn');
+let sideMenu = document.querySelector('.side-nav');
+
 let news = [];
+
+// openNavBtn.addEventListener('click', openNav());
+
+function openNav(){
+  sideMenu.style.width = '250px';
+}
+
+function closeNav(){
+  sideMenu.style.width = '0';
+}
 
 const getLateNews = async() => {
   let url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&topic=business&page_size=10`);
