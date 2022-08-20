@@ -2,11 +2,10 @@
 
 let openNavBtn = document.querySelector('#side-nav-openBtn');
 let sideMenu = document.querySelector('.side-nav');
-
 let news = [];
 
-// openNavBtn.addEventListener('click', openNav());
-
+let menus = document.querySelectorAll('.menus button');
+menus.forEach((item) => item.addEventListener('click', (e) => getNewsByTopic(e)));
 function openNav(){
   sideMenu.style.width = '250px';
 }
@@ -17,18 +16,33 @@ function closeNav(){
 
 const getLateNews = async() => {
   let url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&topic=business&page_size=10`);
-  console.log(url);
+  // console.log(url);
   let header = new Headers({'x-api-key':'VrKECsFqNvXqOoeT-ubrqiM8FUafbe6UQ1MRb2hQ2Ls'});
 
   let response = await fetch(url, { headers:header });
   let data = await response.json();
-  console.log(data);
+  // console.log(data);
 
   news = data.articles;
-  console.log(news);
+  // console.log(news);
   
   render();
 }
+
+const getNewsByTopic = async (event) => {
+  // console.log("메뉴클릭됨", event.target.textContent);
+  let topic = event.target.textContent.toLowerCase();
+  // console.log(topic);
+  let url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&page_size=10&topic=${topic}`);
+  let header = new Headers({'x-api-key':'VrKECsFqNvXqOoeT-ubrqiM8FUafbe6UQ1MRb2hQ2Ls'});
+  let response = await fetch(url, { headers:header });
+  let data = await response.json();
+  news = data.articles;
+  
+  render();
+}
+
+
 
 const render = () => {
   let newsHTML = '';
