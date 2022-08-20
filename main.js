@@ -2,10 +2,27 @@
 
 let openNavBtn = document.querySelector('#side-nav-openBtn');
 let sideMenu = document.querySelector('.side-nav');
+let searchInput = document.querySelector(".search-input");
+let searchBtn = document.querySelector(".search-button");
 let news = [];
-
 let menus = document.querySelectorAll('.menus button');
+
 menus.forEach((item) => item.addEventListener('click', (e) => getNewsByTopic(e)));
+
+const searchKeyword = async () => {
+  let keyword = searchInput.value;
+  let url = new URL(`https://api.newscatcherapi.com/v2/search?q=${keyword}&countries=KR&page_size=10`);
+  let header = new Headers({'x-api-key':'VrKECsFqNvXqOoeT-ubrqiM8FUafbe6UQ1MRb2hQ2Ls'});
+  let response = await fetch(url, { headers:header });
+  let data = await response.json();
+  news = data.articles;
+  
+  render();
+}
+
+searchBtn.addEventListener('click', searchKeyword);
+
+
 function openNav(){
   sideMenu.style.width = '250px';
 }
@@ -22,12 +39,13 @@ const getLateNews = async() => {
   let response = await fetch(url, { headers:header });
   let data = await response.json();
   // console.log(data);
-
+  
   news = data.articles;
   // console.log(news);
   
   render();
 }
+getLateNews();
 
 const getNewsByTopic = async (event) => {
   // console.log("메뉴클릭됨", event.target.textContent);
@@ -41,8 +59,6 @@ const getNewsByTopic = async (event) => {
   
   render();
 }
-
-
 
 const render = () => {
   let newsHTML = '';
@@ -62,5 +78,4 @@ const render = () => {
   document.querySelector('#new-board').innerHTML = newsHTML;
 }
 
-getLateNews();
 
