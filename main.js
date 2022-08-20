@@ -26,6 +26,27 @@ const getLateNews = async() => {
 
   news = data.articles;
   console.log(news);
+  
+  render();
+}
+
+const render = () => {
+  let newsHTML = '';
+  newsHTML = news.map((item) => {
+    return `<div class="row news">
+    <div class="col-lg-4">
+      <img class="new-image-size" src="${item.media}" alt="news-image">
+    </div>
+    <div class="col-lg-8">
+      <h2>${item.title}</h2>
+      <p>${item.summary}</p>
+      <div>${item.clean_url} ${item.published_date}</div>
+    </div>
+  </div>`
+  }).join('');
+
+  document.querySelector('#new-board').innerHTML = newsHTML;
 }
 
 getLateNews();
+
