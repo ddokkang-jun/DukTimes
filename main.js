@@ -7,6 +7,8 @@ let searchBtn = document.querySelector(".search-button");
 let news = [];
 let menus = document.querySelectorAll(".menus button");
 let url;
+let page = 1;
+let total_pages = 0;
 
 menus.forEach((item) =>
   item.addEventListener("click", (e) => getNewsByTopic(e))
@@ -23,8 +25,11 @@ const getNews = async () => {
       if (data.total_hits == 0) {
         throw new Error("검색된 결과값이 없습니다.");
       }
+      page = data.page;
+      total_pages = data.total_page;
       news = data.articles;
       render();
+      pagination();
     } else {
       throw new Error(data.message);
     }
@@ -94,4 +99,17 @@ const errorRender = (message) => {
     ${message}
   </div>`;
   document.querySelector("#new-board").innerHTML = errorHtml;
+};
+
+const pagination = () => {
+  let pagenationHTML = ``;
+  let pageGroup = Math.ceil(page / 5);
+  let last = pageGroup * 5;
+  let first = last - 4;
+
+  for(let i = first; i <= last; i++ ){
+    pagenationHTML += `<li class="page-item"><a class="page-link" href="#">${i}</a></li>`;
+  }
+  
+  document.querySelector(".pagination").innerHTML = pagenationHTML;
 };
