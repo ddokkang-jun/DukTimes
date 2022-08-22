@@ -109,11 +109,30 @@ const pagination = () => {
   let last = pageGroup * 5;
   let first = last - 4;
 
+  pagenationHTML += `
+  <li class="page-item">
+    <a class="page-link ${
+      page == 1 ? "pre-pageDisable" : ""
+    }" href="#" aria-label="Previous" onclick="moveToPage(${page - 1})">
+      <span aria-hidden="true">&lt;</span>
+    </a>
+  </li>`;
+
   for (let i = first; i <= last; i++) {
-    pagenationHTML += `<li class="page-item ${
-      page == i ? "active" : ""
-    }"><a class="page-link" href="#" onclick="moveToPage(${i})">${i}</a></li>`;
+    pagenationHTML += `
+      <li class="page-item ${page == i ? "active" : ""}">
+        <a class="page-link" href="#" onclick="moveToPage(${i})">
+          ${i}
+        </a>
+      </li>`;
   }
+
+  pagenationHTML += `
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next" onclick="moveToPage(${page + 1})">
+        <span aria-hidden="true">&gt;</span>
+      </a>
+    </li>`;
 
   document.querySelector(".pagination").innerHTML = pagenationHTML;
 };

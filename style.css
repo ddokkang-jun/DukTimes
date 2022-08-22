@@ -80,6 +80,10 @@ button {
   border-bottom: 1px solid black;
 }
 
+.pre-pageDisable {
+  display: none;
+}
+
 @media screen and (max-width: 1000px) {
   #side-nav-openBtn {
     display: block;
