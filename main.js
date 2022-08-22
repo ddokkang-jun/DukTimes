@@ -19,6 +19,8 @@ const getNews = async () => {
     let header = new Headers({
       "x-api-key": "VrKECsFqNvXqOoeT-ubrqiM8FUafbe6UQ1MRb2hQ2Ls",
     });
+
+    url.searchParams.set("page", page);
     let response = await fetch(url, { headers: header });
     let data = await response.json();
     if (response.status == 200) {
@@ -107,9 +109,16 @@ const pagination = () => {
   let last = pageGroup * 5;
   let first = last - 4;
 
-  for(let i = first; i <= last; i++ ){
-    pagenationHTML += `<li class="page-item"><a class="page-link" href="#">${i}</a></li>`;
+  for (let i = first; i <= last; i++) {
+    pagenationHTML += `<li class="page-item ${
+      page == i ? "active" : ""
+    }"><a class="page-link" href="#" onclick="moveToPage(${i})">${i}</a></li>`;
   }
-  
+
   document.querySelector(".pagination").innerHTML = pagenationHTML;
+};
+
+const moveToPage = (pageNum) => {
+  page = pageNum;
+  getNews();
 };
