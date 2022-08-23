@@ -1,3 +1,7 @@
+https://newsapi.org/
+cc4cd50af55b441e9915088f7e38e68a
+
+https://newsapi.org/docs/get-started#search
 
 1탄 - API란?
 안녕하세요👋오늘 우리는 프론트엔드계의 꽃🌹 API 를 배울거에요.
@@ -913,3 +917,10 @@ api키값 (api가 로컬호스트에서만 작동될때):
 개인 프로젝트 2개 만들고, API 호출이 익숙해졌다 ? 하면 
 
 그 다음은 자바스크립트 프레임워크인 react 배우러 가기~~~~
+
+
+------------------------------------------------------------------
+
+infinite scroll javascript
+
+https://webdesign.tutsplus.com/tutorials/how-to-implement-infinite-scrolling-with-javascript--cms-37055

@@ -18,35 +18,43 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="side-menu">
+      <button class="closeBtn" onclick="closeNav()">&times;</button>
+      <div class="side-menu-list" id="menu-list">
+        <button>Sport</button>
+        <button>Tech</button>
+        <button>World</button>
+        <button>Finance</button>
+        <button>Politics</button>
+        <button>Business</button>
+        <button>Economics</button>
+        <button>Entertainment</button>
+        <button>Beauty</button>
+        <button>Travel</button>
+        <button>Music</button>
+        <button>Food</button>
+        <button>Science</button>
+        <button>Gaming</button>
+        <button>Energy</button>
+      </div>
+    </div>
+    
     <section class="container">
+      <div class="side-nav-openBtn-area">
+        <button id="side-nav-openBtn" class="icon-button" onclick="openNav()">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
       <section>
-        <div>
-          <button id="side-nav-openBtn" onclick="openNav()">
-            <i class="fas fa-bars"></i>
+        <div class="search-area">
+          <button onclick="openSearchBox()">
+            <i class="fas fa-search"></i>
           </button>
+          <span id="input-area" class="input-disable">
+            <input type="text" class="search-input" />
+            <button class="search-button">go</button>
+          </span>
         </div>
-        <div>
-          <input type="text" class="search-input" />
-          <button class="search-button">go</button>
-        </div>
-      </section>
-      <section class="side-nav">
-        <a href="#" class="closeSideNavBtn" onclick="closeNav()">&times;</a>
-        <a href="#">Sport</a>
-        <a href="#">Tech</a>
-        <a href="#">World</a>
-        <a href="#">Finance</a>
-        <a href="#">Politics</a>
-        <a href="#">Business</a>
-        <a href="#">Economics</a>
-        <a href="#">Entertainment</a>
-        <a href="#">Beauty</a>
-        <a href="#">Travel</a>
-        <a href="#">Music</a>
-        <a href="#">Food</a>
-        <a href="#">Science</a>
-        <a href="#">Gaming</a>
-        <a href="#">Energy</a>
       </section>
       <section class="navbar">
         <div class="title">

@@ -1,7 +1,6 @@
 "use strict";
 
-let openNavBtn = document.querySelector("#side-nav-openBtn");
-let sideMenu = document.querySelector(".side-nav");
+let sideMenu = document.querySelector(".side-menu");
 let searchInput = document.querySelector(".search-input");
 let searchBtn = document.querySelector(".search-button");
 let news = [];
@@ -14,13 +13,33 @@ menus.forEach((item) =>
   item.addEventListener("click", (e) => getNewsByTopic(e))
 );
 
+function openNav() {
+  sideMenu.style.width = "250px";
+}
+
+function closeNav() {
+  sideMenu.style.width = "0";
+}
+
+const openSearchBox = () => {
+  let inputArea = document.querySelector("#input-area");
+  if (inputArea.style.display === "inline") {
+    // console.log("인풋사라짐");
+    inputArea.style.display = "none";
+  } else {
+    // console.log("인풋보임");
+    inputArea.style.display = "inline";
+  }
+};
+
 const getNews = async () => {
   try {
     let header = new Headers({
       "x-api-key": "VrKECsFqNvXqOoeT-ubrqiM8FUafbe6UQ1MRb2hQ2Ls",
     });
 
-    url.searchParams.set("page", page);
+    url.searchParams.set("page", page); // pagenation에서 누른 숫자 page로 이동하도록 해줌
+    console.log(page);
     let response = await fetch(url, { headers: header });
     let data = await response.json();
     if (response.status == 200) {
@@ -28,7 +47,8 @@ const getNews = async () => {
         throw new Error("검색된 결과값이 없습니다.");
       }
       page = data.page;
-      total_pages = data.total_page;
+      total_pages = data.total_pages;
+      total_hits = data.total_hits;
       news = data.articles;
       render();
       pagination();
@@ -40,6 +60,7 @@ const getNews = async () => {
     console.log("잡힌 에러는", error.message);
   }
 };
+
 const searchKeyword = async () => {
   let keyword = searchInput.value;
   url = new URL(
@@ -50,14 +71,6 @@ const searchKeyword = async () => {
 };
 
 searchBtn.addEventListener("click", searchKeyword);
-
-function openNav() {
-  sideMenu.style.width = "250px";
-}
-
-function closeNav() {
-  sideMenu.style.width = "0";
-}
 
 const getLateNews = async () => {
   url = new URL(
@@ -107,12 +120,22 @@ const pagination = () => {
   let pagenationHTML = ``;
   let pageGroup = Math.ceil(page / 5);
   let last = pageGroup * 5;
-  let first = last - 4;
+  if (last > total_pages) {
+    last = total_pages;
+  }
+  let first = last - 4 <= 0 ? 1 : last - 4;
 
   pagenationHTML += `
   <li class="page-item">
     <a class="page-link ${
-      page == 1 ? "pre-pageDisable" : ""
+      page == 1 ? "hide" : ""
+    }" href="#" aria-label="Previous" onclick="moveToPage(${1})">
+      <span aria-hidden="true">&lt;&lt;</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link ${
+      page == 1 ? "hide" : ""
     }" href="#" aria-label="Previous" onclick="moveToPage(${page - 1})">
       <span aria-hidden="true">&lt;</span>
     </a>
@@ -127,12 +150,21 @@ const pagination = () => {
       </li>`;
   }
 
-  pagenationHTML += `
+  if (last < total_pages) {
+    pagenationHTML += `
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next" onclick="moveToPage(${page + 1})">
+      <a class="page-link" href="#" aria-label="Next" onclick="moveToPage(${
+        page + 1
+      })">
         <span aria-hidden="true">&gt;</span>
       </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next" onclick="moveToPage(${total_pages})">
+        <span aria-hidden="true">&gt;&gt;</span>
+      </a>
     </li>`;
+  }
 
   document.querySelector(".pagination").innerHTML = pagenationHTML;
 };
